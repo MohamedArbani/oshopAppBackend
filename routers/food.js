@@ -240,12 +240,22 @@ router.post("/", [auth, admin], async (req, res) => {
 
 // *******************GET BY ID ******************************
 
-router.get("/:id", async (req, res) => {
-  const food = await Food.findById(req.params.id);
-  if (!food) {
-    return res.status(404).send("That type of id not found");
+let findFoodById = async function(id){
+  const foods = await Food.find();
+  for(let food of foods){
+    if(food._id == id)
+      return food;
   }
-  res.send(food);
+
+}
+
+router.get("/:id", async (req, res) => {
+  findFoodById(req.params.id).then((food)=> {
+    if (!food) {
+      return res.status(404).send("That type of id not found");
+    }
+    res.send(food);
+  })
 });
 
 // ? ****************** UPDATE FOOD *****************************

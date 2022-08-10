@@ -7,6 +7,10 @@ const CategorySchema = new mongoose.Schema({
     min: 3,
     maxlength: 50,
   },
+  value: {
+    type: Number,
+    default: 0,
+  }
 });
 
 const Category = mongoose.model("Category", CategorySchema);
