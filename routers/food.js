@@ -204,6 +204,15 @@ router.get("/sale-products", async (req, res) => {
 });
 // *****************GET SORT BY SEARCH****************************
 
+router.get("/search/", async (req, res) => {
+  const foods = await Food.find();
+  if (!foods) {
+    return res.status(404).json({
+      message: "Foods is empty",
+    });
+  }
+  res.send(foods);
+});
 
 router.get("/search/:key", async (req, res) => {
   /* const products = await Food.find({
