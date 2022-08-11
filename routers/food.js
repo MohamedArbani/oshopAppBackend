@@ -204,10 +204,17 @@ router.get("/sale-products", async (req, res) => {
 });
 // *****************GET SORT BY SEARCH****************************
 
+
 router.get("/search/:key", async (req, res) => {
-  const products = await Food.find({
+  /* const products = await Food.find({
     $or: [{ name: { $regex: req.params.key } }],
-  });
+  }); */
+  const products = [];
+  const foods = await Food.find();
+  for(let food of foods){
+    if(food.name.toLowerCase().includes(req.params.key.toLowerCase()))
+      products.push(food);
+  }
   if (!products) {
     res.status(404).json({
       message: 'No result'
